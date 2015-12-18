@@ -1,0 +1,20 @@
+{
+  "name": "ap-transclude",
+  "version": "0.0.1",
+  "description": "AngularJS transclusion on steroids",
+  "main": "index.js",
+  "scripts": {
+    "postinstall": "bower install"
+  },
+  "keywords": [
+    "angular",
+    "transclude",
+    "directive"
+  ],
+  "author": "anotherpit",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/anotherpit/ap-transclude.git"
+  }
+}

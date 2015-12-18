@@ -1,0 +1,45 @@
+<html>
+<body ng-app="demo">
+
+<div ap-transclude-host="example">
+    <div ap-transclude-into="one">First `one`</div>
+    <div ap-transclude-into="one">Second `one`</div>
+
+    <div ap-transclude-slot="one">Default `one`</div>
+    <div ap-transclude-slot="two">Default `two`</div>
+</div>
+
+<input ng-model="value" type="text"/>
+
+<my-directive1>
+    Raw transcluded content
+    <div ap-transclude-into="two">Overriden `two` (value is {{value}})</div>
+</my-directive1>
+
+<script src="../bower_components/angular/angular.js"></script>
+<script src="../index.js"></script>
+<script>
+    var demo = angular.module('demo', ['ap-transclude']);
+    demo.directive('myDirective1', function() {
+        return {
+            restrict: 'E',
+            transclude: true,
+            templateUrl: 'my-directive1'
+        }
+    });
+</script>
+
+<script type="text/ng-template" id="my-directive1">
+    <div ap-transclude-host="myDirective">
+        <ng-transclude></ng-transclude>
+        <div ap-transclude-slot="one">
+            Default `one`
+        </div>
+        <div ap-transclude-slot="two">
+            Default `two`
+        </div>
+    </div>
+</script>
+
+</body>
+</html>
