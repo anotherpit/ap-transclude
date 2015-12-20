@@ -1,44 +1,100 @@
 <html>
 <body ng-app="demo">
 
-<div ap-transclude-host="example">
-    <div ap-transclude-into="one">First `one`</div>
-    <div ap-transclude-into="one">Second `one`</div>
+<h2>All fragments given</h2>
+<my-panel>
+    Hello, world!
+    <div ap-transclude-into="header">
+        <h3>Header</h3>
+    </div>
+    <div ap-transclude-into="footer">
+        <i>Footer</i>
+    </div>
+</my-panel>
 
-    <div ap-transclude-slot="one">Default `one`</div>
-    <div ap-transclude-slot="two">Default `two`</div>
-</div>
+<hr/>
 
-<input ng-model="value" type="text"/>
+<h2>Some fragments omitted</h2>
+<my-panel>
+    Hello, world!
+    <div ap-transclude-into="header">
+        <h3>Header</h3>
+    </div>
+</my-panel>
 
-<my-directive1>
-    Raw transcluded content
-    <div ap-transclude-into="two">Overriden `two` (value is {{value}})</div>
-</my-directive1>
+<h2>Some unknown fragments passed</h2>
+<my-panel>
+    Hello, world!
+    <div ap-transclude-into="header">
+        <h3>Header</h3>
+    </div>
+    <div ap-transclude-into="unknown">
+        This fragment will be swallowed
+    </div>
+</my-panel>
+
+<h2>Nested hosts</h2>
+<my-super-panel>
+    Hello, world!
+    <div ap-transclude-into="header.title">
+        <h3>Title</h3>
+    </div>
+    <div ap-transclude-into="header.subtitle">
+        <h4>Subtitle</h4>
+    </div>
+</my-super-panel>
+
 
 <script src="../bower_components/angular/angular.js"></script>
 <script src="../index.js"></script>
+
 <script>
     var demo = angular.module('demo', ['ap-transclude']);
-    demo.directive('myDirective1', function() {
+    demo.directive('myPanel', function() {
         return {
             restrict: 'E',
             transclude: true,
-            templateUrl: 'my-directive1'
+            templateUrl: 'myPanel.html'
+        }
+    });
+    demo.directive('mySuperPanel', function() {
+        return {
+            restrict: 'E',
+            transclude: true,
+            templateUrl: 'mySuperPanel.html'
+        }
+    });
+    demo.directive('mySuperPanelHeader', function() {
+        return {
+            restrict: 'E',
+            transclude: true,
+            templateUrl: 'mySuperPanelHeader.html'
         }
     });
 </script>
 
-<script type="text/ng-template" id="my-directive1">
-    <div ap-transclude-host="myDirective">
+<script type="text/ng-template" id="myPanel.html">
+    <article ap-transclude-host="panel">
+        <header ap-transclude-slot="header">Default header</header>
         <ng-transclude></ng-transclude>
-        <div ap-transclude-slot="one">
-            Default `one`
-        </div>
-        <div ap-transclude-slot="two">
-            Default `two`
-        </div>
-    </div>
+        <footer ap-transclude-slot="footer">Default footer</footer>
+    </article>
+</script>
+
+<script type="text/ng-template" id="mySuperPanel.html">
+    <article ap-transclude-host="superPanel">
+        <my-super-panel-header></my-super-panel-header>
+        <ng-transclude></ng-transclude>
+        <footer ap-transclude-slot="footer">Default footer</footer>
+    </article>
+</script>
+
+<script type="text/ng-template" id="mySuperPanelHeader.html">
+    <header ap-transclude-host="header">
+        <ng-transclude></ng-transclude>
+        <div ap-transclude-slot="title">Title</div>
+        <div ap-transclude-slot="subtitle">Subtitle</div>
+    </header>
 </script>
 
 </body>
