@@ -4,12 +4,8 @@
 <h2>All fragments given</h2>
 <my-panel>
     Hello, world!
-    <div ap-transclude-into="header">
-        <h3>Header</h3>
-    </div>
-    <div ap-transclude-into="footer">
-        <i>Footer</i>
-    </div>
+    <ap-transclude-fragment into="header"><h3>Header</h3></ap-transclude-fragment>
+    <ap-transclude-fragment into="footer"><i>Footer</i></ap-transclude-fragment>
 </my-panel>
 
 <hr/>
@@ -17,33 +13,26 @@
 <h2>Some fragments omitted</h2>
 <my-panel>
     Hello, world!
-    <div ap-transclude-into="header">
-        <h3>Header</h3>
-    </div>
+    <ap-transclude-fragment into="header"><h3>Header</h3></ap-transclude-fragment>
 </my-panel>
+
+<hr/>
 
 <h2>Some unknown fragments passed</h2>
 <my-panel>
     Hello, world!
-    <div ap-transclude-into="header">
-        <h3>Header</h3>
-    </div>
-    <div ap-transclude-into="unknown">
-        This fragment will be swallowed
-    </div>
+    <ap-transclude-fragment into="header"><h3>Header</h3></ap-transclude-fragment>
+    <ap-transclude-fragment into="unknown">This fragment will be swallowed</ap-transclude-fragment>
 </my-panel>
+
+<hr/>
 
 <h2>Nested hosts</h2>
 <my-super-panel>
     Hello, world!
-    <div ap-transclude-into="header.title">
-        <h3>Title</h3>
-    </div>
-    <div ap-transclude-into="header.subtitle">
-        <h4>Subtitle</h4>
-    </div>
+    <ap-transclude-fragment into="header.title"><h3>Title</h3></ap-transclude-fragment>
+    <ap-transclude-fragment into="header.subtitle"><h4>Subtitle</h4></ap-transclude-fragment>
 </my-super-panel>
-
 
 <script src="../bower_components/angular/angular.js"></script>
 <script src="../index.js"></script>

@@ -1,6 +1,6 @@
 {
   "name": "ap-transclude",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "AngularJS transclusion on steroids",
   "main": "index.js",
   "authors": [

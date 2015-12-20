@@ -62,7 +62,7 @@ module.directive('apTranscludeHost', function() {
             /** @type {Object.<string, apTranscludeHost.ApTranscludeHostController|null>} */
             this._parentHost = null;
 
-            /** @type {Object.<string, apTranscludeInto.ApTranscludeIntoController|null>} */
+            /** @type {Object.<string, apTranscludeFragment.ApTranscludeIntoController|null>} */
             this._fragments = {};
 
             /** @param {string} name */
@@ -79,7 +79,7 @@ module.directive('apTranscludeHost', function() {
 
             /**
              * @param {string} name Fragment name
-             * @param {apTranscludeInto.ApTranscludeIntoController} fragment Fragment controller
+             * @param {apTranscludeFragment.ApTranscludeIntoController} fragment Fragment controller
              */
             this.setFragment = function(name, fragment) {
                 this._fragments[name] = fragment;
@@ -88,7 +88,7 @@ module.directive('apTranscludeHost', function() {
             /**
              * Get fragment registered in this host by name
              * @param {string} name Fragment name
-             * @returns {apTranscludeInto.ApTranscludeIntoController|null}
+             * @returns {apTranscludeFragment.ApTranscludeIntoController|null}
              */
             this.getFragment = function(name) {
                 return this._fragments[name] || null;
@@ -112,7 +112,7 @@ module.directive('apTranscludeHost', function() {
              * - nestedHostCtrl.findFragment('b.slot');
              *
              * @param {string} name Fragment name
-             * @returns {apTranscludeInto.ApTranscludeIntoController|null}
+             * @returns {apTranscludeFragment.ApTranscludeIntoController|null}
              */
             this.findFragment = function(name) {
                 var fragment = this.getFragment(name);
@@ -137,9 +137,8 @@ module.directive('apTranscludeHost', function() {
 
 /**
  * @ngdoc directive
- * @name apTranscludeInto
- * @restrict A
- * @element ANY
+ * @name apTranscludeFragment
+ * @restrict E
  *
  * @description
  * Fragment to transclude into template's slot.
@@ -150,21 +149,21 @@ module.directive('apTranscludeHost', function() {
  * you put one or more named `apTranscludeInto's inside this directive
  * so that they get resolved into slots.
  *
- * @param {string} apTranscludeInto Name of slot to transclude into
+ * @param {string} into Name of slot to transclude into
  */
-module.directive('apTranscludeInto', function() {
+module.directive('apTranscludeFragment', function() {
     return {
-        restrict: 'A',
+        restrict: 'E',
         transclude: true,
-        require: ['apTranscludeInto', '^?apTranscludeHost'],
+        require: ['apTranscludeFragment', '^?apTranscludeHost'],
         link: function($scope, $element, $attrs, controllers) {
             $element.remove();
 
             var ctrl = controllers[0];
             var parentHost = controllers[1];
 
-            ctrl.setName($attrs.apTranscludeInto);
-            $attrs.$observe('apTranscludeInto', function(name) {
+            ctrl.setName($attrs.into);
+            $attrs.$observe('into', function(name) {
                 ctrl.setName(name);
             });
 
@@ -175,7 +174,7 @@ module.directive('apTranscludeInto', function() {
         },
         /**
          * @ngdoc type
-         * @name apTranscludeInto.ApTranscludeIntoController
+         * @name apTranscludeFragment.ApTranscludeIntoController
          */
         controller: ['$transclude', function($transclude) {
             this._transclude = $transclude;
