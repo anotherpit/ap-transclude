@@ -123,7 +123,7 @@ myApp.config(['myApTransclude.config', function(config) {
 Further
 =======
 
-- Each of `apTranscludeHost`, `apTranscludeFragment` and `apTranscludeSlot` directives are `transluce:true` and `replace:false` so there might be some excess nodes in markup. We should investigate if we can safely use `replace:true` in conjunction with `ngRepeat`, `ngIf` and so on.
+- Both `apTranscludeHost` and `apTranscludeSlot` directives are `transclude:true` and `replace:false` (so is `apTranscludeFragment`, too, but the latter explicitly removes itself from DOM) so there might be some excess nodes in markup. We should investigate if we can safely use `replace:true` in conjunction with `ngRepeat`, `ngIf` and so on.
 - Looks like we can implement `apTranscludeDefault` directive to inject default slot markup inside `apTranscludeFragment`.
 
 Any related contributions are welcome.
