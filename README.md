@@ -48,29 +48,29 @@ OK? Not really. Perhaps, the user would like to be able to pass his/her own head
     <footer ap-transclude-slot="footer">Footer</footer>
 </article>
 ```
-What has just happened? We declared `header` and `footer` as template slots (`apTranscludeSlot`s) so that the user can provide his/her own contents for each of them using fragments (`apTranscludeInto`s). For those slots to work we made sure that they have a common `apTranscludeHost` ancestor that is also an ancestor for `ngTransclude` node.
+What has just happened? We declared `header` and `footer` as template slots (`apTranscludeSlot`s) so that the user can provide his/her own contents for each of them using fragments (`apTranscludeFragment`s). For those slots to work we made sure that they have a common `apTranscludeHost` ancestor that is also an ancestor for `ngTransclude` node.
 Now user might use your directive in `index.html` like so:
 ```html
 <my-panel>
     Hello, world!
-    <div ap-transclude-into="header">My very special header</div>
-    <div ap-transclude-into="footer">My very special footer</div>
+    <ap-transclude-fragment into="header">My very special header</ap-transclude-fragment>
+    <ap-transclude-fragment into="footer">My very special footer</ap-transclude-fragment>
 </my-panel>
 ```
-`apTranscludeInto`s will be removed from `ngTransclude` and placed into `apTranscludeSlot`s with the specified names, so their placement within directive doesn't matter. Thus, user might write `index.html` even so:
+`apTranscludeFragment`s will be removed from `ngTransclude` and placed into `apTranscludeSlot`s with the specified names, so their placement within directive doesn't matter. Thus, user might write `index.html` even so:
 ```html
 <my-panel>
-    <div ap-transclude-into="footer">My very special footer</div>
+    <ap-transclude-fragment into="footer">My very special footer</ap-transclude-fragment>
     Hello, world!
-    <div ap-transclude-into="header">My very special header</div>
+    <ap-transclude-fragment into="header">My very special header</ap-transclude-fragment>
 </my-panel>
 ```
 If no matching slot for fragment is found, the fragment is just swallowed not affecting resulting markup. And vice versa: if there's no fragment the slot will be filled with its default markup.
 ```html
 <my-panel>
     Hello, world!
-    <div ap-transclude-into="header">My very special header</div>
-    <div ap-transclude-into="unknown">This fragment will be swallowed</div>
+    <ap-transclude-fragment into="header">My very special header</ap-transclude-fragment>
+    <ap-transclude-fragment into="unknown">This fragment will be swallowed</ap-transclude-fragment>
 </my-panel>
 ```
 
@@ -109,8 +109,8 @@ So we've just broken our `index.html` since there's no `header` slot available a
 ```html
 <my-panel>
     Hello, world!
-    <div ap-transclude-into="header.title">Title</div>
-    <div ap-transclude-into="header.subtitle">Subtitle</div>
+    <ap-transclude-fragment into="header.title">Title</ap-transclude-fragment>
+    <ap-transclude-fragment into="header.subtitle">Subtitle</ap-transclude-fragment>
 </my-panel>
 ```
 You can even change default path name separator from default `.` to whatever string you want by reassigning `nameDelimiter` property of `apTransclude.config` service:
@@ -123,7 +123,7 @@ myApp.config(['myApTransclude.config', function(config) {
 Further
 =======
 
-- Each of `apTranscludeHost`, `apTranscludeInto` and `apTranscludeSlot` directives are `transluce:true` and `replace:false` so there might be some excess nodes in markup. We should investigate if we can safely use `replace:true` in conjunction with `ngRepeat`, `ngIf` and so on.
-- Looks like we can implement `apTranscludeDefault` directive to inject default slot markup inside `apTranscludeInto`.
+- Each of `apTranscludeHost`, `apTranscludeFragment` and `apTranscludeSlot` directives are `transluce:true` and `replace:false` so there might be some excess nodes in markup. We should investigate if we can safely use `replace:true` in conjunction with `ngRepeat`, `ngIf` and so on.
+- Looks like we can implement `apTranscludeDefault` directive to inject default slot markup inside `apTranscludeFragment`.
 
 Any related contributions are welcome.
